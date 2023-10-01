@@ -39,7 +39,7 @@ export const addTodoAtom = atom(() => '', (get, set) => {
 });
 
 export const updateTodoAtom = atom(
-  () => todoListAtom,
+  (get) => get(todoListAtom),
   (get, set, { id, text }: Omit<Todo, 'done'>) => {
     set(todoListAtom, updateTodo(get(todoListAtom), id, text));
   },

@@ -1,9 +1,8 @@
 import { useAtom } from 'jotai';
-import { removeTodoAtom, todoListAtom, toggleTodoAtom, updateTodoAtom } from '../store';
+import { removeTodoAtom, toggleTodoAtom, updateTodoAtom } from '../store';
 
 function TodoList() {
-  const [todoList] = useAtom(todoListAtom);
-  const [, updateTodo] = useAtom(updateTodoAtom);
+  const [todoList, updateTodo] = useAtom(updateTodoAtom);
   const [, toggleTodo] = useAtom(toggleTodoAtom);
   const [, removeTodo] = useAtom(removeTodoAtom);
 
