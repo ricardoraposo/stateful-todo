@@ -1,3 +1,3 @@
-# Create Trybe App
+# Stateful Todo
 
-Esse é um projeto criado com as principais tecnologias utilizadas no módulo de front-end da Trybe.
+Essa é uma repo criada com o intuito de praticar diversas opcões de ferramentas de gerenciamento de estado para React
