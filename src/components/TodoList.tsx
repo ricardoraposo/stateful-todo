@@ -1,22 +1,11 @@
-import { Todo, removeTodo, toggleTodo, updateTodo } from '../store';
+import { useAtom } from 'jotai';
+import { removeTodoAtom, todoListAtom, toggleTodoAtom, updateTodoAtom } from '../store';
 
-type PropType = {
-  todoList: Todo[];
-  setTodoList: (todoList: Todo[]) => void;
-};
-
-function TodoList({ todoList, setTodoList }: PropType) {
-  const handleTodoToggle = (id: number) => {
-    setTodoList(toggleTodo(todoList, id));
-  };
-
-  const handleTodoUpdate = (id: number, value: string) => {
-    setTodoList(updateTodo(todoList, id, value));
-  };
-
-  const handleTodoRemoval = (id: number) => {
-    setTodoList(removeTodo(todoList, id));
-  };
+function TodoList() {
+  const [todoList] = useAtom(todoListAtom);
+  const [, updateTodo] = useAtom(updateTodoAtom);
+  const [, toggleTodo] = useAtom(toggleTodoAtom);
+  const [, removeTodo] = useAtom(removeTodoAtom);
 
   return (
     <div>
@@ -26,21 +15,20 @@ function TodoList({ todoList, setTodoList }: PropType) {
           className="flex gap-4 items-center my-3"
         >
           <input
-            className="w-1/12"
             type="checkbox"
             checked={ todo.done }
-            onChange={ () => handleTodoToggle(todo.id) }
+            onChange={ () => toggleTodo(todo.id) }
           />
           <input
             type="text"
             value={ todo.text }
-            className="w-9/12 bg-slate-100 text-xl px-4 py-1 rounded-lg"
-            onChange={ (e) => handleTodoUpdate(todo.id, e.target.value) }
+            className="w-full bg-slate-100 text-xl px-4 py-1 rounded-lg"
+            onChange={ (e) => updateTodo({ id: todo.id, text: e.target.value }) }
           />
           <button
-            className="w-2/12 px-4 py-1.5 bg-slate-300 rounded-lg hover:bg-slate-400
+            className="w-1/12 px-4 py-1.5 bg-slate-300 rounded-lg hover:bg-slate-400
             transition"
-            onClick={ () => handleTodoRemoval(todo.id) }
+            onClick={ () => removeTodo(todo.id) }
           >
             Delete
           </button>

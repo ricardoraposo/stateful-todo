@@ -1,19 +1,9 @@
-import { useState } from 'react';
-import { addTodo } from '../store';
-import { Todo } from '../types';
+import { useAtom } from 'jotai';
+import { addTodoAtom, todoItemAtom } from '../store';
 
-type PropsType = {
-  todoList: Todo[];
-  setTodoList: (todoList: Todo[]) => void;
-};
-
-function TodoAdd({ todoList, setTodoList }: PropsType) {
-  const [todoText, setTodoText] = useState('');
-
-  const handleClick = () => {
-    setTodoList(addTodo(todoList, todoText));
-    setTodoText('');
-  };
+function TodoAdd() {
+  const [todoText, setTodoText] = useAtom(todoItemAtom);
+  const [, setTodoList] = useAtom(addTodoAtom);
 
   return (
     <div className="w-full my-6">
@@ -27,7 +17,7 @@ function TodoAdd({ todoList, setTodoList }: PropsType) {
           className="w-5/6 bg-slate-100 text-xl px-4 py-1 rounded-lg"
         />
         <button
-          onClick={ handleClick }
+          onClick={ setTodoList }
           className="w-1/6 px-4 bg-slate-300 rounded-lg hover:bg-slate-400"
         >
           Add Todo
