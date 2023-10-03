@@ -1,22 +1,10 @@
-import { Todo, removeTodo, toggleTodo, updateTodo } from '../store';
+import { useTodoStore } from '../store';
 
-type PropType = {
-  todoList: Todo[];
-  setTodoList: (todoList: Todo[]) => void;
-};
-
-function TodoList({ todoList, setTodoList }: PropType) {
-  const handleTodoToggle = (id: number) => {
-    setTodoList(toggleTodo(todoList, id));
-  };
-
-  const handleTodoUpdate = (id: number, value: string) => {
-    setTodoList(updateTodo(todoList, id, value));
-  };
-
-  const handleTodoRemoval = (id: number) => {
-    setTodoList(removeTodo(todoList, id));
-  };
+function TodoList() {
+  const todoList = useTodoStore((state) => state.todoList);
+  const handleTodoToggle = useTodoStore((state) => state.toggleTodo);
+  const handleTodoUpdate = useTodoStore((state) => state.updateTodo);
+  const handleTodoRemoval = useTodoStore((state) => state.removeTodo);
 
   return (
     <div>
