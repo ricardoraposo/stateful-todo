@@ -11,8 +11,7 @@ function TodoAdd() {
   };
 
   return (
-    <div className="w-full my-6">
-      <h1 className="text-3xl text-white font-semibold mb-3">Todo List</h1>
+    <div className="w-full my-3">
       <div className="flex gap-4">
         <input
           id="text-input"

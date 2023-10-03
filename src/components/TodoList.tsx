@@ -1,24 +1,25 @@
-import { useContext } from 'react';
+import { useContext, useMemo } from 'react';
 import { TodoContext, removeTodo, toggleTodo, updateTodo } from '../store';
 
 function TodoList() {
-  const { todoList, setTodoList } = useContext(TodoContext);
+  const contextValue = useContext(TodoContext);
+  const memoValue = useMemo(() => contextValue, [contextValue]);
 
   const handleTodoToggle = (id: number) => {
-    setTodoList(toggleTodo(todoList, id));
+    memoValue.setTodoList(toggleTodo(memoValue.todoList, id));
   };
 
   const handleTodoUpdate = (id: number, value: string) => {
-    setTodoList(updateTodo(todoList, id, value));
+    memoValue.setTodoList(updateTodo(memoValue.todoList, id, value));
   };
 
   const handleTodoRemoval = (id: number) => {
-    setTodoList(removeTodo(todoList, id));
+    memoValue.setTodoList(removeTodo(memoValue.todoList, id));
   };
 
   return (
     <div>
-      {todoList.map((todo) => (
+      {memoValue.todoList.map((todo) => (
         <div
           key={ todo.id }
           className="flex gap-4 items-center my-3"
