@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react';
+import { createContext, useReducer } from 'react';
 
 export type Todo = {
   id: number;
@@ -32,16 +32,50 @@ export const toggleTodo = (todos: Todo[], id: number) => (
 
 type ContextType = {
   todoList: Todo[];
-  setTodoList: (list: Todo[]) => void;
 };
 
-export const TodoContext = createContext({} as ContextType);
+type ActionType = {
+  type: string;
+  payload: any;
+};
+
+export const TodoContext = createContext({} as [ContextType, React.Dispatch<ActionType>]);
+
+const reducer = (state: ContextType, action: ActionType) => {
+  const { type, payload } = action;
+  switch (type) {
+    case 'ADD_TODO':
+      return {
+        ...state,
+        todoList: addTodo(state.todoList, payload),
+      };
+    case 'UPDATE_TODO':
+      return {
+        ...state,
+        todoList: updateTodo(state.todoList, payload.id, payload.text),
+      };
+    case 'REMOVE_TODO':
+      return {
+        ...state,
+        todoList: removeTodo(state.todoList, payload),
+      };
+    case 'TOGGLE_TODO':
+      return {
+        ...state,
+        todoList: toggleTodo(state.todoList, payload),
+      };
+    default:
+      return state;
+  }
+};
+
+const initialState = {
+  todoList: [],
+} as ContextType;
 
 export default function ContextProvider({ children }: { children: React.ReactNode }) {
-  const [todoList, setTodoList] = useState<Todo[]>([]);
-
   return (
-    <TodoContext.Provider value={ { todoList, setTodoList } }>
+    <TodoContext.Provider value={ useReducer(reducer, initialState) }>
       {children}
     </TodoContext.Provider>
   );

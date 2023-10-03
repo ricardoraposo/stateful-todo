@@ -1,12 +1,15 @@
 import { useContext, useState } from 'react';
-import { TodoContext, addTodo } from '../store';
+import { TodoContext } from '../store';
 
 function TodoAdd() {
-  const { todoList, setTodoList } = useContext(TodoContext);
+  const [, dispatch] = useContext(TodoContext);
   const [todoText, setTodoText] = useState('');
 
   const handleClick = () => {
-    setTodoList(addTodo(todoList, todoText));
+    dispatch({
+      type: 'ADD_TODO',
+      payload: todoText,
+    });
     setTodoText('');
   };
 
