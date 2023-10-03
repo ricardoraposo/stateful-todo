@@ -1,13 +1,8 @@
-import { useState } from 'react';
-import { addTodo } from '../store';
-import { Todo } from '../types';
+import { useContext, useState } from 'react';
+import { TodoContext, addTodo } from '../store';
 
-type PropsType = {
-  todoList: Todo[];
-  setTodoList: (todoList: Todo[]) => void;
-};
-
-function TodoAdd({ todoList, setTodoList }: PropsType) {
+function TodoAdd() {
+  const { todoList, setTodoList } = useContext(TodoContext);
   const [todoText, setTodoText] = useState('');
 
   const handleClick = () => {

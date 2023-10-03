@@ -1,11 +1,9 @@
-import { Todo, removeTodo, toggleTodo, updateTodo } from '../store';
+import { useContext } from 'react';
+import { TodoContext, removeTodo, toggleTodo, updateTodo } from '../store';
 
-type PropType = {
-  todoList: Todo[];
-  setTodoList: (todoList: Todo[]) => void;
-};
+function TodoList() {
+  const { todoList, setTodoList } = useContext(TodoContext);
 
-function TodoList({ todoList, setTodoList }: PropType) {
   const handleTodoToggle = (id: number) => {
     setTodoList(toggleTodo(todoList, id));
   };
@@ -26,7 +24,7 @@ function TodoList({ todoList, setTodoList }: PropType) {
           className="flex gap-4 items-center my-3"
         >
           <input
-            className="w-1/12"
+            // className="w-1/12"
             type="checkbox"
             checked={ todo.done }
             onChange={ () => handleTodoToggle(todo.id) }
@@ -34,11 +32,11 @@ function TodoList({ todoList, setTodoList }: PropType) {
           <input
             type="text"
             value={ todo.text }
-            className="w-9/12 bg-slate-100 text-xl px-4 py-1 rounded-lg"
+            className="w-11/12 bg-slate-100 text-xl px-4 py-1 rounded-lg"
             onChange={ (e) => handleTodoUpdate(todo.id, e.target.value) }
           />
           <button
-            className="w-2/12 px-4 py-1.5 bg-slate-300 rounded-lg hover:bg-slate-400
+            className="w-1/12 px-4 py-1.5 bg-slate-300 rounded-lg hover:bg-slate-400
             transition"
             onClick={ () => handleTodoRemoval(todo.id) }
           >

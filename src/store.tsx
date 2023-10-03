@@ -1,3 +1,5 @@
+import { createContext, useState } from 'react';
+
 export type Todo = {
   id: number;
   text: string;
@@ -27,3 +29,20 @@ export const toggleTodo = (todos: Todo[], id: number) => (
     done: todo.id === id ? !todo.done : todo.done,
   }))
 );
+
+type ContextType = {
+  todoList: Todo[];
+  setTodoList: (list: Todo[]) => void;
+};
+
+export const TodoContext = createContext({} as ContextType);
+
+export default function ContextProvider({ children }: { children: React.ReactNode }) {
+  const [todoList, setTodoList] = useState<Todo[]>([]);
+
+  return (
+    <TodoContext.Provider value={ { todoList, setTodoList } }>
+      {children}
+    </TodoContext.Provider>
+  );
+}
