@@ -2,7 +2,10 @@ import { useContext } from 'react';
 import { TodoContext } from '../store';
 
 function TodoList() {
-  const { todoList, toggleItem, updateItem, removeItem } = useContext(TodoContext);
+  const context = useContext(TodoContext);
+  if (!context) return <div>Something went wrong...</div>;
+
+  const { todoList, toggleItem, updateItem, removeItem } = context;
 
   return (
     <div>

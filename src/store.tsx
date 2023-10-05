@@ -38,7 +38,7 @@ type ContextType = {
   removeItem: (id: number) => void;
 };
 
-export const TodoContext = createContext({} as ContextType);
+export const TodoContext = createContext<ContextType | null>(null);
 
 export default function ContextProvider({ children }: { children: React.ReactNode }) {
   const [todoList, setTodoList] = useState<Todo[]>([]);
