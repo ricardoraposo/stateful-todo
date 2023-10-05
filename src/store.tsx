@@ -32,7 +32,10 @@ export const toggleTodo = (todos: Todo[], id: number) => (
 
 type ContextType = {
   todoList: Todo[];
-  setTodoList: (list: Todo[]) => void;
+  addItem: (text: string) => void;
+  toggleItem: (id: number) => void;
+  updateItem: (id: number, text: string) => void;
+  removeItem: (id: number) => void;
 };
 
 export const TodoContext = createContext({} as ContextType);
@@ -40,8 +43,16 @@ export const TodoContext = createContext({} as ContextType);
 export default function ContextProvider({ children }: { children: React.ReactNode }) {
   const [todoList, setTodoList] = useState<Todo[]>([]);
 
+  const addItem = (text: string) => setTodoList(addTodo(todoList, text));
+
+  const toggleItem = (id: number) => setTodoList(toggleTodo(todoList, id));
+
+  const updateItem = (id: number, text: string) => setTodoList(updateTodo(todoList, id, text));
+
+  const removeItem = (id: number) => setTodoList(removeTodo(todoList, id));
+
   return (
-    <TodoContext.Provider value={ { todoList, setTodoList } }>
+    <TodoContext.Provider value={ { todoList, addItem, toggleItem, updateItem, removeItem } }>
       {children}
     </TodoContext.Provider>
   );
