@@ -1,21 +1,19 @@
-import { Todo, removeTodo, toggleTodo, updateTodo } from '../store';
+import { useContext } from 'react';
+import { TodoContext } from '../store';
 
-type PropType = {
-  todoList: Todo[];
-  setTodoList: (todoList: Todo[]) => void;
-};
+function TodoList() {
+  const { todoList, toggleItem, removeItem, updateItem } = useContext(TodoContext);
 
-function TodoList({ todoList, setTodoList }: PropType) {
   const handleTodoToggle = (id: number) => {
-    setTodoList(toggleTodo(todoList, id));
+    toggleItem(id);
   };
 
   const handleTodoUpdate = (id: number, value: string) => {
-    setTodoList(updateTodo(todoList, id, value));
+    updateItem(id, value);
   };
 
   const handleTodoRemoval = (id: number) => {
-    setTodoList(removeTodo(todoList, id));
+    removeItem(id);
   };
 
   return (
