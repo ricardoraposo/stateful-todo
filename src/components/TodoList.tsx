@@ -11,10 +11,10 @@ function TodoList() {
     });
   };
 
-  const handleTodoUpdate = (id: number, value: string) => {
+  const handleTodoUpdate = (id: number, text: string) => {
     dispatch({
       type: 'UPDATE_TODO',
-      payload: { id, text: value },
+      payload: { id, text },
     });
   };
 
